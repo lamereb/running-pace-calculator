@@ -6,7 +6,7 @@ exit main();
 
 sub main {
   my @time;
-  my $distance, my $quiet_mode = 0;
+  my $distance, my $quiet_mode = 0, my $kilo_mode = 0;
   my $param, my $param_count = 0;
   my $dist_type = "mile";
 
@@ -24,8 +24,16 @@ sub main {
       $dist_type = "km";
       $param_count += 1;
     }
-    elsif ($param =~ /[0-9\.]+/) {
-      $distance = $param;
+    elsif ($param =~ /[0-9\.]+[km]?/) {
+      if ($param =~ /k$/) {
+        $kilo_mode = 1;
+      }
+      if ($param =~ /[km]$/) {
+        $distance = substr($param, 0, -1);
+      }
+      else {
+        $distance = $param;
+      }
       $param_count += 1;
     }
   }
@@ -33,6 +41,13 @@ sub main {
     print_usage();
     return 1;
   }
+  if ($kilo_mode && $dist_type eq "mile") {
+    $distance *= 0.621;
+  }
+  elsif (!$kilo_mode && $dist_type eq "km") {
+    $distance *= 1.609;
+  }
+
   my @pace = calc_pace($distance, @time);
   if ($quiet_mode) {
     printf "$pace[0]:%05.2f\n", $pace[1];
@@ -45,10 +60,12 @@ sub main {
 
 ## Print Usage if not proper count of command line arguments ##
 sub print_usage {
-  print "usage: $0 [-qk] h:mm:ss distance\n";
+  print "usage: $0 [-qk] h:mm:ss distance[k|m]\n";
+  print "    distance[k|m]: distance in km (k) or miles (m)\n";
   print "    -q: quiet mode, print pace in time only: [mm:ss]\n";
-  print "    -k: km, interprets distance in km, and returns pace in km\n";
-  # print "--example:\t$0 1:51 13.1\n";
+  print "    -k: returns pace in km per min\n";
+  print "  example: $0 1:51:13 13.1m\n";
+  print "   returns 8:29.39 min/mile\n";
   exit;
 }
 
