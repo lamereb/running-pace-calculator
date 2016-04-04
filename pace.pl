@@ -6,24 +6,32 @@ exit main();
 
 sub main {
   # if no args, print usage
-  if (@ARGV != 2) {
+  if (@ARGV < 2) {
     print_usage();
   }
   # -- else get command line args
   my @time;
-  my $mileage, my $param;
+  my $distance, my $param, my $quiet_mode = 0;
 
   foreach $param (@ARGV) {
     if (index($param, ':') != -1) {
       @time = split /:/, $param;
     }
+    elsif ($param eq "-q" || $param eq "--quiet"){
+      $quiet_mode = 1;
+    }
     else {
-      $mileage = $param;
+      $distance = $param;
     }
   }
 
-  my @pace = calc_pace($mileage, @time);
-  printf "$pace[0]:%05.2f min/mile pace\n", $pace[1];
+  my @pace = calc_pace($distance, @time);
+  if ($quiet_mode) {
+    printf "$pace[0]:%05.2f\n", $pace[1];
+  }
+  else {
+    printf "$pace[0]:%05.2f min/mile pace\n", $pace[1];
+  }
 }
 
 ## Print Usage if not proper count of command line arguments ##
