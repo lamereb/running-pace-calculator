@@ -8,6 +8,7 @@ sub main {
   # if no args, print usage
   if (@ARGV < 2) {
     print_usage();
+    return 1;
   }
   # -- else get command line args
   my @time;
@@ -32,12 +33,15 @@ sub main {
   else {
     printf "$pace[0]:%05.2f min/mile pace\n", $pace[1];
   }
+  return 0;
 }
 
 ## Print Usage if not proper count of command line arguments ##
 sub print_usage {
-  print "usage:\t\t$0 <[hh:]mm[:ss]> <mileage>\n";
-  print "--example:\t$0 1:51 13.1\n";
+  print "usage: $0 [-qk] h:mm:ss distance\n";
+  print "    -q: quiet mode, print pace in time only: [mm:ss]\n";
+  print "    -k: km, interprets distance in km, and returns pace in km\n";
+  # print "--example:\t$0 1:51 13.1\n";
   exit;
 }
 
