@@ -20,16 +20,16 @@ sub main {
       $quiet_mode = 1;
       $param_count += 1;
     }
-    elsif ($param eq "-k" || $param eq "--km") {
+    elsif ($param eq "-k" || $param eq "--km") {# calculate pace min/km
       $dist_type = "km";
       $param_count += 1;
     }
-    elsif ($param =~ /[0-9\.]+[km]?/) {
-      if ($param =~ /k$/) {
+    elsif ($param =~ /[0-9\.]+[km]?/) {         # distance
+      if ($param =~ /k$/) {                     # ends in 'k'
         $kilo_mode = 1;
       }
-      if ($param =~ /[km]$/) {
-        $distance = substr($param, 0, -1);
+      if ($param =~ /[km]$/) {                  # ends in 'k' or 'm'
+        $distance = substr($param, 0, -1);      # strip the letter
       }
       else {
         $distance = $param;
