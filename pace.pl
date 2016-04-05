@@ -4,6 +4,7 @@ use warnings;
 
 exit main();
 
+# main() function returns a calculated pace in min/km or min/mile (default)
 sub main {
   my @time;
   my $distance, my $quiet_mode = 0, my $kilo_mode = 0;
@@ -17,7 +18,7 @@ sub main {
       $param_count += 1;
     }
     elsif ($param eq "-q" || $param eq "--quiet"){
-      $quiet_mode = 1;
+      $quiet_mode = 1;                          # quiet mode, print number only
       $param_count += 1;
     }
     elsif ($param eq "-k" || $param eq "--km") {# calculate pace min/km
@@ -37,7 +38,7 @@ sub main {
       $param_count += 1;
     }
   }
-  if (@ARGV < 2 || $param_count != @ARGV) {
+  if (@ARGV < 2 || $param_count != @ARGV) {     # exit on invalid cmd-line args
     print_usage();
     return 1;
   }
@@ -58,14 +59,14 @@ sub main {
   return 0;
 }
 
-## Print Usage if not proper count of command line arguments ##
+## print_usage() if not proper count of command line arguments ##
 sub print_usage {
   print "usage: $0 [-qk] h:mm:ss distance[k|m]\n";
-  print "    distance[k|m]: distance in km (k) or miles (m)\n";
+  print "    distance[k|m]: distance in km (k) or miles (m) (default))\n";
   print "    -q: quiet mode, print pace in time only: [mm:ss]\n";
   print "    -k: returns pace in km per min\n";
-  print "  example: $0 1:51:13 13.1m\n";
-  print "   returns 8:29.39 min/mile\n";
+  # print "  example: $0 1:51:13 13.1m\n";
+  # print "   returns 8:29.39 min/mile\n";
   exit;
 }
 
