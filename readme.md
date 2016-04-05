@@ -5,26 +5,26 @@ This is a small script I wrote mostly to get acquainted with perl syntax. Given 
 # A Few Example Runs
 
 ```bash
-pace.pl 0:18:33 5k
+$ ./pace.pl 0:18:33 5k
 5:58.45 min/mile pace
 ```
 
 ```bash
-pace.pl 0:38:29 6.2
+$ ./pace.pl 0:38:29 6.2
 6:11.82 min/mile pace
 ```
 
 ```bash
-pace.pl -q 2:02:57 26.2
+$ ./pace.pl -q 2:02:57 26.2
 4:41.56
 ```
 
 ```bash
-pace.pl -k 2:02:57 26.2
+$ ./pace.pl -k 2:02:57 26.2
 2:54.99 min/km pace
 ```
 
 ```bash
-pace.pl -q -k 0:38:29 10k
+$ ./pace.pl -q -k 0:38:29 10k
 3:50.90
 ```
